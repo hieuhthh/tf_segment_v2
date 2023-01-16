@@ -1,0 +1,43 @@
+route: ./
+seed: 42
+CUDA_VISIBLE_DEVICES: "0,1,2,3"
+
+im_size: 352
+BATCH_SIZE: 4
+VALID_BATCH_SIZE: 4
+
+n_labels: 1
+
+stem_patch_size: 2
+window_size: 4
+n_blocks: [2, 2, 4, 2]
+depths: [64, 128, 256, 512]
+decode_dim: 256
+
+valid_ratio: ~
+test_ratio: ~
+
+train_with_labels: True
+train_repeat: True
+train_shuffle: 1536
+train_augment: True
+train_batch_augment: True
+train_multi_scale_output: False
+
+valid_with_labels: True
+valid_repeat: False
+valid_shuffle: False
+valid_augment: False
+valid_batch_augment: False
+valid_multi_scale_output: False
+
+pretrained: ~
+
+monitor: val_loss
+mode: min
+
+max_lr: 1.0e-3
+min_lr: 1.0e-5
+cycle_epoch: 100
+n_cycle: 5
+save_weights_only: True
