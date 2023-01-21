@@ -121,7 +121,3 @@ visual_save_metric(his, metric)
 # with open("valid_eval.txt", mode='w') as f:
 #     for item in valid_eval:
 #         f.write(str(item) + " ")
-
-
-
-

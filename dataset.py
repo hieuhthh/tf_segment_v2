@@ -10,6 +10,8 @@ from augment import *
 def build_decoder(with_labels=True, target_size=(256, 256), mask_size=None):
     if mask_size is None:
         mask_size = target_size
+    else:
+        mask_size = (mask_size,mask_size)
 
     def decode_img_preprocess(img, sizes):
         img = tf.image.resize(img, sizes)
@@ -33,11 +35,13 @@ def build_decoder(with_labels=True, target_size=(256, 256), mask_size=None):
 
 def do_multi_scale_image(img, target_size):
     # img_x2 = tf.image.resize(img, (target_size[0]//2,target_size[1]//2))
+    # img_x4 = tf.image.resize(img, (target_size[0]//4,target_size[1]//4))
+    # img_x8 = tf.image.resize(img, (target_size[0]//8,target_size[1]//8))
+    # img_x16 = tf.image.resize(img, (target_size[0]//16,target_size[1]//16))
+    # img_x32 = tf.image.resize(img, (target_size[0]//32,target_size[1]//32))
+    # return {'x1':img, 'x2':img_x4, 'x3':img_x8, 'x4':img_x16, 'x5':img_x32}
     img_x4 = tf.image.resize(img, (target_size[0]//4,target_size[1]//4))
-    img_x8 = tf.image.resize(img, (target_size[0]//8,target_size[1]//8))
-    img_x16 = tf.image.resize(img, (target_size[0]//16,target_size[1]//16))
-    img_x32 = tf.image.resize(img, (target_size[0]//32,target_size[1]//32))
-    return {'x1':img, 'x2':img_x4, 'x3':img_x8, 'x4':img_x16, 'x5':img_x32}
+    return img_x4
 
 def build_dataset(paths, labels=None, bsize=32,
                   decode_fn=None, augment=None, batch_augment_img=None,
@@ -121,6 +125,7 @@ if __name__ == '__main__':
     print(valid_mask_paths[0])
 
     # train_augment = False
+    mask_size = None
 
     train_n_images = len(train_img_paths)
     train_dataset = build_dataset_from_X_Y(train_img_paths, train_mask_paths, train_with_labels, img_size,
@@ -137,6 +142,11 @@ if __name__ == '__main__':
 
     import cv2
     import numpy as np
+
+    print("min x:", np.min(x))
+    print("max x:", np.max(x))
+    print("min y:", np.min(y))
+    print("max y:", np.max(y))
 
     cv2.imwrite("sample_dataset_img.png", np.array(x[0][...,::-1])*255)
 

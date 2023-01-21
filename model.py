@@ -49,8 +49,8 @@ def create_model(im_size, stem_patch_size=2, window_size=8, n_blocks=[2, 2, 4, 2
         x = Conv2D(decode_dim, 1, padding="same")(x)
         x = extract_block(x, decode_dim)
 
-    x = tf.image.resize(x, out_shape)
-    x = extract_block(x, decode_dim)
+    # x = tf.image.resize(x, out_shape)
+    # x = extract_block(x, decode_dim)
 
     x = Conv2D(n_labels, 1, padding="same", activation="sigmoid")(x)
 
